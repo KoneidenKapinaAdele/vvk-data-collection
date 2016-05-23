@@ -19,7 +19,7 @@ def data_gen(device, peaks, stddev):
     distributions = [norm(loc=peak, scale=stddev) for peak in peaks]
     while True:
         prob = sum(d.pdf(daytime_as_float()) for d in distributions)
-        print("current movement probability is", prob)
+        print("current probability of being occupied is", prob)
         perform_time = randint(30,300)
         idle_time = perform_time / prob
         yield dict(place_id=place, device_id=device, type="movement", value=1)
@@ -29,8 +29,8 @@ def data_gen(device, peaks, stddev):
 
 def send_data_from_generator(url, data_generator):
     for event in data_generator:
-        print(url, event)
-        #requests.post(url, json=event)
+        print(event)
+        requests.post(url, json=event)
 
 def start_thread(function, args):
     t = threading.Thread(target=function, args=args)
