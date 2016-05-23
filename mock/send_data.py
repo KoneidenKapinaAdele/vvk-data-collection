@@ -2,6 +2,7 @@
 import config
 import requests
 import time
+import json
 from random import randint
 import threading
 from scipy.stats import norm
@@ -30,7 +31,9 @@ def data_gen(device, peaks, stddev):
 def send_data_from_generator(url, data_generator):
     for event in data_generator:
         print(event)
-        requests.post(url, json=event)
+        r = requests.post(url, data=json.dumps(event),
+                headers={'content-type': 'application/json'})
+        print(r.json())
 
 def start_thread(function, args):
     t = threading.Thread(target=function, args=args)
