@@ -22,7 +22,8 @@ def data_gen(device, peaks, stddev):
         prob = sum(d.pdf(daytime_as_float()) for d in distributions)
         print("current probability of being occupied is", prob)
         perform_time = randint(30,300)
-        idle_time = perform_time / prob
+        # prob = pt / (pt+it) <=> it = pt/prob - pt
+        idle_time = perform_time / prob - perform_time
         yield dict(place_id=place, device_id=device, type="movement", value=1)
         sleep(perform_time)
         yield dict(place_id=place, device_id=device, type="movement", value=0)
