@@ -33,7 +33,6 @@ def send_data_from_generator(url, data_generator):
         print(event)
         r = requests.post(url, data=json.dumps(event),
                 headers={'content-type': 'application/json'})
-        print(r.json())
 
 def start_thread(function, args):
     t = threading.Thread(target=function, args=args)
