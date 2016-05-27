@@ -1,0 +1,17 @@
+---
+
+- name: copy over z-wave installation script
+  copy: src=razberry-install dest=/opt/razberry-install mode=0755
+
+- name: create z-way configuration directory
+  file: path=/etc/z-way state=directory mode=0755
+
+- name: mark the installation questions as already answered
+  file: path=/etc/z-way/box_type state=touch
+
+- name: run razberry-install
+  shell: bash /opt/razberry-install | tee razberry-install.log
+  args:
+    creates: /etc/z-way/VERSION
+    chdir: /tmp
+

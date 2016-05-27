@@ -21,7 +21,8 @@ razberry-install:
 	wget -q -O $@ http://razberry.z-wave.me/install
 
 ansible-install-stamp:
-	sudo apt-get install ansible
+	grep -q jessie-backports /etc/apt/sources.list
+	sudo apt-get -t jessie-backports install ansible
 	touch $@
 
 clean:
