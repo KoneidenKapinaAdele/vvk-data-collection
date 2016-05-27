@@ -1,0 +1,7 @@
+---
+- name: set up all razberry z-wave controllers
+  hosts: all
+  remote_user: pi
+  roles:
+   - razberry
+

@@ -1,6 +1,11 @@
 
 RPI=192.168.7.143
 
+razberry-update-stamp: site.yml razberry-install hosts \
+		ansible-install-stamp ssh-configure-stamp
+	ansible-playbook -i hosts $<
+	touch $@
+
 ping: hosts ansible-install-stamp ssh-configure-stamp
 	ansible all -i hosts -m ping -u pi
 
