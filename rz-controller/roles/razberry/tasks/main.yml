@@ -9,6 +9,9 @@
 - name: mark the installation questions as already answered
   file: path=/etc/z-way/box_type state=touch
 
+- name: disable serial console on ttyAMA0 which is used by Razberry
+  service: name=serial-getty@ttyAMA0 enabled=no state=stopped
+
 - name: run razberry-install
   shell: bash /opt/razberry-install | tee razberry-install.log
   args:
