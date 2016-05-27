@@ -12,9 +12,18 @@
 - name: disable serial console on ttyAMA0 which is used by Razberry
   service: name=serial-getty@ttyAMA0 enabled=no state=stopped
 
-- name: run razberry-install
+- name: install z-way server
   shell: bash /opt/razberry-install | tee razberry-install.log
   args:
     creates: /etc/z-way/VERSION
     chdir: /tmp
+
+- name: install ufw for firewall
+  apt: name=ufw
+
+- name: allow ssh
+  ufw: proto=tcp port=22 rule=allow
+
+- name: disallow everything else
+  ufw: state=enabled direction=incoming policy=deny
 
