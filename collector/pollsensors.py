@@ -2,6 +2,7 @@
 import config as c
 from secret_config import zway_password
 import requests
+import time
 from requests.auth import HTTPBasicAuth
 from readsensors import sendsensorvalue
 
@@ -35,6 +36,15 @@ def update_all_devices(updates):
 	for devinfo, value in devices_mapped(devices(updates)):
 		sendsensorvalue(devinfo, value_normalise(devinfo, value))
 
+def update_loop(interval):
+	timestamp = 0
+	while True:
+		print "updates since %d:" % timestamp
+		updates = get_updates_since(timestamp)
+		update_all_devices(updates)
+		timestamp = updated_time(updates)
+		time.sleep(interval)
+
 if __name__ == '__main__':
-	update_all_devices(get_updates_since(1464531287))
+	update_loop(1)
 
