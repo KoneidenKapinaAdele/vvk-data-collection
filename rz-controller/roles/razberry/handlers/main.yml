@@ -1,0 +1,5 @@
+---
+
+- name: restart z-way
+  service: name=z-way-server state=restarted
+

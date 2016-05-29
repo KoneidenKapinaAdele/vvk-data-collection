@@ -1,7 +1,8 @@
 
-RPI=192.168.7.143
+RPI=192.168.7.127
 
 razberry-update-stamp: site.yml razberry-install hosts \
+		roles/razberry/handlers/main.yml roles/razberry/tasks/main.yml \
 		ansible-install-stamp ssh-configure-stamp
 	ansible-playbook -i hosts $<
 	touch $@
