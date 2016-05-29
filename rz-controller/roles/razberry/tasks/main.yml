@@ -9,6 +9,9 @@
 - name: mark the installation questions as already answered
   file: path=/etc/z-way/box_type state=touch
 
+- name: disable serial console in cmdline.txt
+  replace: dest=/boot/cmdline.txt regexp='console=serial0,115200'
+
 - name: disable serial console on ttyAMA0 which is used by Razberry
   service: name=serial-getty@ttyAMA0 enabled=no state=stopped
   notify: restart z-way
@@ -27,4 +30,7 @@
 
 - name: disallow everything else
   ufw: state=enabled direction=incoming policy=deny
+
+- name: allow mosh
+  ufw: proto=udp port=60001 rule=allow
 
