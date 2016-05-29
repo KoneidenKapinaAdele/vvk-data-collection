@@ -11,3 +11,5 @@ zway_url = "http://localhost:8083/JS/Run/"
 zway_pattern = "zway.devices[%d].instances[%d].commandClasses[%d].data[%d].%s.value"
 zway_user = 'vvk'
 
+vvk_url = 'https://secret-oasis-98680.herokuapp.com/v1/event'
+
