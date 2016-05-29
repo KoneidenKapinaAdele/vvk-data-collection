@@ -7,9 +7,13 @@ devices = [
 	('vessa1_liike', 1002, 1, 'movement', (2, 0, 48, 1, 'level'))
 ]
 
+zway_user = 'vvk'
+
+zway_poll_url = "http://localhost:8083/ZWaveAPI/Data/"
+zway_poll_pattern = "devices.%d.instances.%d.commandClasses.%d.data.%d"
+
 zway_url = "http://localhost:8083/JS/Run/"
 zway_pattern = "zway.devices[%d].instances[%d].commandClasses[%d].data[%d].%s.value"
-zway_user = 'vvk'
 
 vvk_url = 'https://secret-oasis-98680.herokuapp.com/v1/event'
 

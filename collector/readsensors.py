@@ -1,6 +1,7 @@
 
 import config as c
 import requests
+from time import sleep
 from requests.auth import HTTPBasicAuth
 from secret_config import zway_password
 
@@ -19,6 +20,11 @@ def sendsensorvalue(dev, value):
 def updatedevice(dev):
 	return sendsensorvalue(dev, getsensorvalue(dev))
 
+def updateloop(interval):
+	while True:
+		for device in c.devices: updatedevice(device)
+		sleep(interval)
+
 if __name__ == '__main__':
-	for device in c.devices: updatedevice(device)
+	updateloop(10)
 
