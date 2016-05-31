@@ -5,6 +5,7 @@ from time import sleep
 from requests.auth import HTTPBasicAuth
 from requests.exceptions import RequestException
 from secret_config import zway_password
+from helpers import log, report_exception
 
 def getsensorvalue(dev):
 	name, id, place, type, path = dev
@@ -14,21 +15,13 @@ def getsensorvalue(dev):
 
 def sendsensorvalue(dev, value):
 	name, id, place, type, path = dev
-	print("%s (%s) is %s" % (name, type, value))
+	log("%s (%s) is %s" % (name, type, value))
 	message = dict(device_id=id, place_id=place, type=type, value=value)
 	try: return requests.post(c.vvk_url, json=message)
-	except RequestException as e: print("Post problem:", e)
+	except RequestException as e: log("Post problem:", e)
 
 def updatedevice(dev):
 	return sendsensorvalue(dev, getsensorvalue(dev))
-
-def report_exception():
-	import sys
-	e = sys.exc_info()
-	print("Unexpected exception:")
-	print(e[1])
-	print("Backtrace:")
-	print(e[2])
 
 def updateloop(interval):
 	import sys
