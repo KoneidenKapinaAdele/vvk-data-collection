@@ -4,7 +4,7 @@ from secret_config import zway_password
 import requests
 import time
 from requests.auth import HTTPBasicAuth
-from readsensors import sendsensorvalue
+from readsensors import sendsensorvalue, report_exception
 
 def get_updates_since(timestamp):
 	return requests.get(c.zway_poll_url + str(timestamp),
@@ -39,10 +39,12 @@ def update_all_devices(updates):
 def update_loop(interval):
 	timestamp = 0
 	while True:
-		print "updates since %d:" % timestamp
-		updates = get_updates_since(timestamp)
-		update_all_devices(updates)
-		timestamp = updated_time(updates)
+		print("updates since %d:" % timestamp)
+		try:
+			updates = get_updates_since(timestamp)
+			update_all_devices(updates)
+			timestamp = updated_time(updates)
+		except: report_exception()
 		time.sleep(interval)
 
 if __name__ == '__main__':
