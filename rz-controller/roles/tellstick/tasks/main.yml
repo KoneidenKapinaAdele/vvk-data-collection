@@ -6,3 +6,9 @@
 - name: Add telldus debian repository
   apt_repository: repo='deb http://download.telldus.com/debian/ stable main' state=present
 
+- name: Install Telldus core
+  apt: name=telldus-core
+
+- name: Install Telldus center
+  apt: name=tellduscenter
+
