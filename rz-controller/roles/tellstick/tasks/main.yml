@@ -1,0 +1,8 @@
+---
+
+- name: Add telldus public APT key
+  apt_key: url=http://download.telldus.se/debian/telldus-public.key state=present
+
+- name: Add telldus debian repository
+  apt_repository: repo='deb http://download.telldus.com/debian/ stable main' state=present
+
