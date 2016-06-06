@@ -7,9 +7,9 @@ from time import time
 
 def device_list(): return request('devices/list')
 
-def devices(json):
+def devices():
     return [(int(dev['id']), dev['name'])
-            for dev in json['device'] if dev['online']]
+            for dev in device_list()['device'] if dev['online']]
 
 def device_events(dev_id, since):
     return request('device/history',
@@ -45,6 +45,6 @@ def convert_event(event):
 
 if __name__ == '__main__':
     since = int(sys.argv[1])
-    events = new_events(devices(device_list()), since)
+    events = new_events(devices(), since)
     print([convert_event(ev) for ev in events], latest_timestamp(events, since))
 
