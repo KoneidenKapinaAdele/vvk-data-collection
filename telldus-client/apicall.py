@@ -8,7 +8,7 @@ from requests import get
 consumer = oauth.OAuthConsumer(public_key, private_key)
 token = oauth.OAuthToken(token, token_secret)
 
-def request(url, params):
+def request(url, params={}):
     url = 'http://api.telldus.com/json/' + url
     oauth_req = oauth.OAuthRequest.from_consumer_and_token(consumer,
             token=token, http_method='GET', http_url=url, parameters=params)
