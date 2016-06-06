@@ -27,7 +27,7 @@ def new_events(devices, since):
             for event in device_events(dev_id, since)['history']]
 
 def latest_timestamp(events, since):
-    return max(since, max(int(event['ts']) for event in events))
+    return max([since] + [int(event['ts']) for event in events])
 
 def ts_to_iso(ts):
     return datetime.fromtimestamp(ts).isoformat()
