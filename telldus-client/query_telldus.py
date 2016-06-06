@@ -9,7 +9,7 @@ def device_list(): return request('devices/list')
 
 def devices():
     return [(int(dev['id']), dev['name'])
-            for dev in device_list()['device'] if dev['online']]
+            for dev in device_list()['device']] # if dev['online']]
 
 def device_events(dev_id, since):
     return request('device/history',
