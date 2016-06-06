@@ -24,7 +24,6 @@ def updatedevice(dev):
 	return sendsensorvalue(dev, getsensorvalue(dev))
 
 def updateloop(interval):
-	import sys
 	while True:
 		try:
 			for device in c.devices: updatedevice(device)
