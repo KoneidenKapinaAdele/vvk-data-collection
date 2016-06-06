@@ -29,10 +29,22 @@ def new_events(devices, since):
 def latest_timestamp(events, since):
     return max(since, max(int(event['ts']) for event in events))
 
+def ts_to_iso(ts):
+    return datetime.fromtimestamp(ts).isoformat()
+
 types = {'liike': 'movement', 'ovi': 'closed'}
+
+def convert_event(event):
+    name = event['name'].split()
+    dev_type = types.get(name[0], 'none')
+    dev_place = int(name[1])
+    state = int(event['state'])
+    value = 2 - state if dev_type == 'closed' else state - 1
+    return dict(device_id=event['id'], place_id=dev_place, type=dev_type,
+            time=ts_to_iso(event['ts']), value=value)
 
 if __name__ == '__main__':
     since = int(sys.argv[1])
     events = new_events(devices(device_list()), since)
-    print(events, latest_timestamp(events, since))
+    print([convert_event(ev) for ev in events], latest_timestamp(events, since))
 
