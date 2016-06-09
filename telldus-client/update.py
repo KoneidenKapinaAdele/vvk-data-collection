@@ -25,5 +25,5 @@ def update_loop(interval, since=0):
         sleep(interval)
 
 if __name__ == '__main__':
-    update_loop(10)
+    update_loop(10, 1465486627)
 
