@@ -18,6 +18,8 @@ def fetch_and_send(since):
     for event in events:
         response = send_event(convert_event(event))
         print("%d: %s" % (response.status_code, response.text))
+	if response.status_code != 201:
+		raise RequestException("No event created")
     return latest_timestamp(events, since)
 
 def update_loop(interval, since=0):
