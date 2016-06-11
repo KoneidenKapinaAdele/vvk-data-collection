@@ -22,15 +22,3 @@
     creates: /etc/z-way/VERSION
     chdir: /tmp
 
-- name: install ufw for firewall
-  apt: name=ufw
-
-- name: allow ssh
-  ufw: proto=tcp port=22 rule=allow
-
-- name: disallow everything else
-  ufw: state=enabled direction=incoming policy=deny
-
-- name: allow mosh
-  ufw: proto=udp port=60001 rule=allow
-
