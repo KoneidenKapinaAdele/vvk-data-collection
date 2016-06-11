@@ -5,6 +5,7 @@ from config import event_post_url
 from query_telldus import devices, new_events, convert_event, latest_timestamp
 from time import sleep
 from requests.exceptions import RequestException
+from traceback import print_tb
 
 def send_event(event):
     print("%s %s is %s at %s" %
@@ -23,7 +24,9 @@ def update_loop(interval, since=0):
     while True:
         print("updates since %d:" % since)
         try: since = fetch_and_send(since)
-        except: print(sys.exc_info())
+        except:
+		print(sys.exc_info())
+		print_tb(sys.exc_info()[2])
         sleep(interval)
 
 if __name__ == '__main__':
