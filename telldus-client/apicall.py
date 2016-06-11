@@ -15,7 +15,7 @@ def request(url, params={}):
     oauth_req.sign_request(oauth.OAuthSignatureMethod_HMAC_SHA1(),
             consumer, token)
     headers = oauth_req.to_header()
-    return get(url, headers=headers, params=params).json()
+    return get(url, headers=headers, params=params, timeout=10).json()
 
 if __name__ == '__main__':
     params = dict(arg.split('=') for arg in sys.argv[2:])

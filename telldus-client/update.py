@@ -9,7 +9,7 @@ from requests.exceptions import RequestException
 def send_event(event):
     print("%s %s is %s at %s" %
             (event['type'], event['place_id'], event['value'], event['time']))
-    try: return requests.post(event_post_url, json=event)
+    try: return requests.post(event_post_url, json=event, timeout=10)
     except RequestException as e: log("Post problem:", e)
 
 def fetch_and_send(since):
