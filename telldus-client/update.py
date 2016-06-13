@@ -1,16 +1,17 @@
 
-import sys, requests
+import sys, requests, json
 
 from config import event_post_url
 from query_telldus import devices, new_events, convert_event, latest_timestamp
-from time import sleep
+from time import sleep, localtime
 from requests.exceptions import RequestException
 from traceback import print_tb
 
 def send_event(event):
     print("%s %s is %s at %s" %
             (event['type'], event['place_id'], event['value'], event['time']))
-    try: return requests.post(event_post_url, json=event, timeout=10)
+    try: return requests.post(event_post_url, data=json.dumps(event),
+		headers={'Content-type': 'application/json'}, timeout=10)
     except RequestException as e: log("Post problem:", e)
 
 def fetch_and_send(since):
@@ -24,7 +25,8 @@ def fetch_and_send(since):
 
 def update_loop(interval, since=0):
     while True:
-        print("updates since %d:" % since)
+        print("updates since %d (at %02d:%02d):" %
+			(since, localtime().tm_hour, localtime().tm_min))
         try: since = fetch_and_send(since)
         except:
 		print(sys.exc_info())
@@ -32,5 +34,5 @@ def update_loop(interval, since=0):
         sleep(interval)
 
 if __name__ == '__main__':
-    update_loop(10, 1465576823)
+    update_loop(10, 1465576819)
 
