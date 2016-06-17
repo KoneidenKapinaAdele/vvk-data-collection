@@ -10,6 +10,7 @@ from traceback import print_tb
 def send_event(event):
     print("%s %s is %s at %s" %
             (event['type'], event['place_id'], event['value'], event['time']))
+    if event['type'] == 'none': return
     try: return requests.post(event_post_url, data=json.dumps(event),
 		headers={'Content-type': 'application/json'}, timeout=10)
     except RequestException as e: log("Post problem:", e)
@@ -18,9 +19,10 @@ def fetch_and_send(since):
     events = new_events(devices(), since)
     for event in events:
         response = send_event(convert_event(event))
-        print("%d: %s" % (response.status_code, response.text))
-	if response.status_code != 201:
-		raise RequestException("No event created")
+	if response:
+		print("%d: %s" % (response.status_code, response.text))
+		if response.status_code != 201:
+			raise RequestException("No event created")
     return latest_timestamp(events, since)
 
 def update_loop(interval, since=0):

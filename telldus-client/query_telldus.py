@@ -36,8 +36,10 @@ types = {'liike': 'movement', 'ovi': 'closed'}
 
 def convert_event(event):
     name = event['name'].split()
+    name.extend(['none', 'none'])
     dev_type = types.get(name[0], 'none')
-    dev_place = int(name[1])
+    try: dev_place = int(name[1])
+    except ValueError: dev_place = 0
     state = int(event['state'])
     value = 2 - state if dev_type != 'closed' else state - 1
     return dict(device_id=event['id'], place_id=dev_place, type=dev_type,
